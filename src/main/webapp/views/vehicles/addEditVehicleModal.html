@@ -1,0 +1,239 @@
+<!-- Add/Edit Vehicle Modal -->
+<form name="vehicleForm" ng-submit="ctrl.saveVehicle(ctrl.vehicle, vehicleForm)" novalidate autocomplete="off">
+    <div class="modal-header">
+        <button type="button" class="close"
+                ng-click="ctrl.cancel()">
+            <span>&times;</span>
+        </button>
+        <h4 ng-if="!ctrl.edit" class="modal-title">Unos vozila</h4>
+        <h4 ng-if="ctrl.edit" class="modal-title">Ažuriranje vozila</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div ng-if="!ctrl.edit" class="col-sm-6">
+                <div class="form-group"
+                    ng-class="{ 'has-error': (vehicleForm.regNum.$dirty || vehicleForm.$submitted) &&
+                    vehicleForm.regNum.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Registarski broj
+                    </label>
+                    <input name="regNum" class="form-control" placeholder="Registarski broj" required
+                            ng-model="ctrl.vehicle.regNumber" />
+                    <span class="help-block"
+                        ng-show="(vehicleForm.regNum.$dirty || vehicleForm.$submitted) &&
+                    vehicleForm.regNum.$error.required"></span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (vehicleForm.manufacturer.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.manufacturer.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Proizvođač
+                    </label>
+                    <select class="form-control" name="manufacturer" required
+                            ng-model="ctrl.manufacturer"
+                            ng-change="ctrl.onManufacturerChange(ctrl.manufacturer)"
+                            ng-options="m as m.name for m in ctrl.manufacturers track by m.manufacturerCode">
+                        <option>Odaberite proizvođača</option>
+                    </select>
+                    <span class="help-block"
+                          ng-show="(vehicleForm.manufacturer.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.manufacturer.$error.required">Proizvođač je obavezno polje!</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (vehicleForm.model.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.model.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Model
+                    </label>
+                    <select class="form-control" name="model" required
+                            ng-model="ctrl.vehicle.model"
+                            ng-disabled="!ctrl.manufacturer"
+                            ng-options="model as model.modelName for model in ctrl.models track by model.id">
+                        <option>Odaberite model</option>
+                    </select>
+                    <span class="help-block"
+                          ng-show="(vehicleForm.model.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.model.$error.required">Model je obavezno polje!</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">Kategorija vozila</label>
+                    <select class="form-control"
+                            ng-model="ctrl.vehicle.category"
+                            ng-options="cat as cat.category for cat in ctrl.categories track by cat.id">
+                        <option>Odaberite kategoriju</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (vehicleForm.mileage.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.mileage.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Kilometraža
+                    </label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" name="mileage"
+                               placeholder="Kilometraža" required
+                               ng-model="ctrl.vehicle.currentMileage">
+                        <span class="input-group-addon">km</span>
+                    </div>
+                    <span class="help-block"
+                          ng-show="(vehicleForm.mileage.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.mileage.$error.required">Kilometraža je obavezno polje!</span>
+                    <span class="help-block"
+                          ng-show="vehicleForm.mileage.$error.number">
+                        Molimo vas unesite validan broj!</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (vehicleForm.engineSize.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.engineSize.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Kubikaža
+                    </label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" name="engineSize"
+                               step="0.1" placeholder="Kubikaža" required
+                               ng-model="ctrl.vehicle.engineSize">
+                        <span class="input-group-addon">litara</span>
+                    </div>
+                    <span class="help-block"
+                          ng-show="(vehicleForm.engineSize.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.engineSize.$error.required">Kubikaža je obavezno polje!</span>
+                    <span class="help-block"
+                          ng-show="vehicleForm.engineSize.$error.number">
+                        Molimo vas unesite validan broj!</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (vehicleForm.horsePower.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.horsePower.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Snaga motora
+                    </label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" name="horsePower"
+                               placeholder="Konjska snaga" required
+                               ng-model="ctrl.vehicle.horsePower">
+                        <span class="input-group-addon">KS</span>
+                    </div>
+                    <span class="help-block"
+                          ng-show="(vehicleForm.horsePower.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.horsePower.$error.required">Snaga motora je obavezno polje!</span>
+                    <span class="help-block"
+                          ng-show="vehicleForm.horsePower.$error.number">
+                        Molimo vas unesite validan broj!</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="control-label">Gorivo</label>
+                    <input class="form-control" placeholder="Vrsta goriva"
+                           ng-model="ctrl.vehicle.fuelType">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group" ng-class="{ 'has-error': vehicleForm.lastService.$invalid }">
+                    <label class="control-label">Poslednji servis</label>
+                    <div class="input-group">
+                        <input class="form-control" name="lastService" placeholder="Poslednji servis"
+                               uib-datepicker-popup="dd/MM/yyyy"
+                               is-open="lastServiceOpen"
+                               ng-model="ctrl.vehicle.lastService">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-primary"
+                                    ng-click="lastServiceOpen = !lastServiceOpen">
+                                <i class="glyphicon glyphicon-calendar"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <span class="help-block"
+                          ng-show="vehicleForm.lastService.$error.date">Pogrešan datum! (dd/MM/yyyy)</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (vehicleForm.price.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.price.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Cena za jedan dan
+                    </label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" name="price"
+                               step="100" placeholder="Cena/dan" required
+                               ng-model="ctrl.vehicle.price">
+                        <span class="input-group-addon">RSD</span>
+                    </div>
+                    <span class="help-block"
+                          ng-show="(vehicleForm.price.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.price.$error.required">Cena je obavezno polje!</span>
+                    <span class="help-block"
+                          ng-show="vehicleForm.price.$error.number">
+                        Molimo vas unesite validan broj!</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (vehicleForm.seats.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.seats.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Broj sedišta
+                    </label>
+                    <input class="form-control" type="number" name="seats" placeholder="Broj sedišta" required
+                           ng-model="ctrl.vehicle.numberOfSeats">
+                    <span class="help-block"
+                          ng-show="(vehicleForm.seats.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.seats.$error.required">Broj sedišta je obavezno polje!</span>
+                    <span class="help-block"
+                          ng-show="vehicleForm.seats.$error.number">
+                        Molimo vas unesite validan broj!</span>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (vehicleForm.manuYear.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.manuYear.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Godina proizvodnje
+                    </label>
+                    <input class="form-control" type="number" name="manuYear" placeholder="Godište" required
+                           ng-model="ctrl.vehicle.manufacturingYear">
+                    <span class="help-block"
+                          ng-show="(vehicleForm.manuYear.$dirty || vehicleForm.$submitted) &&
+                        vehicleForm.manuYear.$error.required">Godina proizvodnje je obavezno polje!</span>
+                    <span class="help-block"
+                          ng-show="vehicleForm.manuYear.$error.number">
+                        Molimo vas unesite validan broj!</span>
+                </div>
+            </div>
+            <!-- <div class=">
+                <h4 class="heading"></h4>
+                <p class="text">{{ ctrl.vehicle.image }}</p>
+            </div> -->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-success">
+            <span class="glyphicon glyphicon-ok"></span>&nbsp;
+            Sačuvaj
+        </button>
+        <button type="button" class="btn btn-default" ng-click="ctrl.cancel()">Zatvori</button>
+    </div>
+</form>

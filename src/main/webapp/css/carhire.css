@@ -1,0 +1,29 @@
+body {
+	padding: 70px;
+	background-color: #666699;
+}
+
+.modal:nth-of-type(even) {
+	z-index: 1042 !important;
+}
+
+.modal-backdrop.in:nth-of-type(even) {
+	z-index: 1041 !important;
+}
+
+.clickable-table > tbody > tr {
+	cursor: pointer;
+}
+
+.dynamic-content {
+    max-height: 75vh;
+    overflow-y: auto;
+}
+
+.carhire-tooltip {
+    font-size: 14px;
+}
+
+.glyphicon-asterisk {
+    color: #ff0000;
+}

@@ -1,0 +1,94 @@
+<div>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="">Klijenti</a>
+			</div>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="customer-navbar">
+				<ul class="nav navbar-nav">
+					<li>
+						<div class="navbar-form">
+							<input ng-model="filterText" class="form-control" placeholder="Pretraga">
+						</div>
+					</li>
+					<li>
+						<a href="" ng-click="isFilterCollapsed = !isFilterCollapsed">
+							Filter&nbsp;
+							<span ng-class="{ 'glyphicon glyphicon-triangle-left': !isFilterCollapsed,
+                        		'glyphicon glyphicon-triangle-bottom': isFilterCollapsed }"></span>
+						</a>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<li>
+						<button type="button" class="btn btn-primary navbar-btn"
+								ng-click="ctrl.showAddEditCustomerDialog(undefined, 0, $event)">
+							<span class="glyphicon glyphicon-plus"></span>&nbsp;
+							Dodaj klijenta
+						</button>
+					</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+	
+	<!-- Table customers -->
+	<div class="well dynamic-content">
+		<table class="table table-striped table-hover clickable-table">
+			<thead>
+				<tr>
+					<th>Ime</th>
+					<th>Prezime</th>
+					<th>JMBG</th>
+					<th>E-mail</th>
+					<th>Broj telefona</th>
+					<th>Adresa</th>
+					<th>Pol</th>
+					<th class="text-center">Neplaćene rezervacije</th>
+					<th class="text-center">Brisanje klijenta</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="c in ctrl.customers | filter : filterText | orderBy : 'name'"
+					ng-click="ctrl.showAddEditCustomerDialog(c)">
+					<td ng-bind="c.name"
+                        uib-tooltip="Ažurirajte klijenta" tooltip-placement="top"
+                        tooltip-class="carhire-tooltip" tooltip-append-to-body="true"></td>
+					<td ng-bind="c.lastName"
+                        uib-tooltip="Ažurirajte klijenta" tooltip-placement="top"
+                        tooltip-class="carhire-tooltip" tooltip-append-to-body="true"></td>
+					<td ng-bind="c.persNo"
+                        uib-tooltip="Ažurirajte klijenta" tooltip-placement="top"
+                        tooltip-class="carhire-tooltip" tooltip-append-to-body="true"></td>
+					<td ng-bind="c.email"
+                        uib-tooltip="Ažurirajte klijenta" tooltip-placement="top"
+                        tooltip-class="carhire-tooltip" tooltip-append-to-body="true"></td>
+					<td ng-bind="c.phoneNumber"
+                        uib-tooltip="Ažurirajte klijenta" tooltip-placement="top"
+                        tooltip-class="carhire-tooltip" tooltip-append-to-body="true"></td>
+					<td ng-bind="c.address"
+                        uib-tooltip="Ažurirajte klijenta" tooltip-placement="top"
+                        tooltip-class="carhire-tooltip" tooltip-append-to-body="true"></td>
+					<td ng-bind="c.gender == 'MALE' ? 'MUŠKI' : 'ŽENSKI'"
+                        uib-tooltip="Ažurirajte klijenta" tooltip-placement="top"
+                        tooltip-class="carhire-tooltip" tooltip-append-to-body="true"></td>
+					<td class="text-center">
+						<button type="button" class="btn btn-info"
+								ng-click="ctrl.showUnpaidBookings(c, $event)">
+							<span class="glyphicon glyphicon-new-window"></span>
+						</button>
+					</td>
+					<td class="text-center">
+						<button type="button" class="btn btn-danger"
+								ng-click="ctrl.showDeleteDialog(c, $event)">
+							<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

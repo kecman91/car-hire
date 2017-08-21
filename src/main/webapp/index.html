@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Car Hire App</title>
+
+		<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
+        <link rel="stylesheet" href="js/bower_components/AngularJS-Toaster/toaster.min.css" />
+		<link rel="stylesheet" href="css/carhire.css" />
+	</head>
+	<body ng-app="CarHire">
+		<!-- Toaster Container -->
+		<toaster-container toaster-options="{ 'time-out': { 'toast-success': 5000, 'toast-warning': 5000 } }">
+		</toaster-container>
+
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed"
+						data-toggle="collapse" data-target="#carhire-navbar"
+						aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="#!/">Rent-A-Car</a>
+				</div>
+				<div class="collapse navbar-collapse" id="carhire-navbar">
+					<ul class="nav navbar-nav">
+						<li ng-class="{active: location.reservation}">
+							<a href="#!/reservation">Rezervacija</a>
+						</li>
+						<li ng-class="{active: location.vehicles}">
+							<a href="#!/vehicles">Vozila</a>
+						</li>
+						<li ng-class="{active: location.customers}">
+							<a href="#!/customers">Klijenti</a>
+						</li>
+						<li ng-class="{active: location.bookings}">
+							<a href="#!/bookingMngmnt">Upravljanje rezervacijama</a>
+						</li>
+					</ul>
+				</div>
+				<!-- /.navbar-collapse -->
+			</div>
+		</nav>
+	
+		<div class="container" ng-view></div>
+		
+		<!-- AngularJS -->
+		<script src="js/bower_components/angular/angular.min.js"></script>
+		<script src="js/bower_components/angular-route/angular-route.min.js"></script>
+		
+		<!-- Angular Animate -->
+		<script src="js/bower_components/angular-animate/angular-animate.min.js"></script>
+		
+		<!-- UI Bootstrap -->
+		<script src="js/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+        <!-- Toaster -->
+        <script src="js/bower_components/AngularJS-Toaster/toaster.min.js"></script>
+	
+		<!-- Modules -->
+		<script src="js/app.js"></script>
+		
+		<!-- Controllers -->
+		<script src="js/controllers/reservation/ReservationController.js"></script>
+		<script src="js/controllers/vehicles/VehicleController.js"></script>
+		<script src="js/controllers/vehicles/AddEditVehicleModalController.js"></script>
+		<script src="js/controllers/customer/CustomerController.js"></script>
+        <script src="js/controllers/customer/AddEditCustomerModalController.js"></script>
+		<script src="js/controllers/bookingManagement/BookingManagementController.js"></script>
+		
+		<!-- Services -->
+		<script src="js/services/CustomerService.js"></script>
+		<script src="js/services/VehicleService.js"></script>
+		<script src="js/services/BookingService.js"></script>
+		<script src="js/services/ManufacturerService.js"></script>
+		<script src="js/services/ModelService.js"></script>
+		<script src="js/services/VehicleCategoryService.js"></script>
+        <script src="js/services/ToasterService.js"></script>
+		<script src="js/services/DialogService.js"></script>
+		<script src="js/services/UtilService.js"></script>
+
+	</body>
+</html>

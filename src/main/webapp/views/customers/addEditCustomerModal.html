@@ -1,0 +1,138 @@
+<!-- Add Customer Modal -->
+<form name="customerForm" ng-submit="ctrl.saveCustomer(ctrl.customer, customerForm)" novalidate autocomplete="off">
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close"
+            ng-click="ctrl.cancel()">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title" ng-if="!ctrl.edit">Unos klijenta</h4>
+        <h4 class="modal-title" ng-if="ctrl.edit">Ažuriranje klijenta</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group col-md-6"
+                 ng-class="{ 'has-error': (customerForm.$submitted || customerForm.cName.$dirty) &&
+                    customerForm.cName.$invalid }">
+                <label class="control-label">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                    Ime
+                </label>
+                <div class="input-group">
+                    <input class="form-control" name="cName" placeholder="Ime" required
+                           ng-model="ctrl.customer.name">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                </div>
+                <span class="help-block"
+                      ng-show="(customerForm.$submitted || customerForm.cName.$dirty) &&
+                        customerForm.cName.$error.required">
+                Ime je obavezno polje!
+            </span>
+            </div>
+            <div class="form-group col-md-6"
+                 ng-class="{ 'has-error': (customerForm.$submitted || customerForm.cLastName.$dirty) &&
+                    customerForm.cLastName.$invalid }">
+                <label class="control-label">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                    Prezime
+                </label>
+                <div class="input-group">
+                    <input class="form-control" type="text" name="cLastName" placeholder="Prezime" required
+                           ng-model="ctrl.customer.lastName">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+                </div>
+                <span class="help-block"
+                      ng-show="(customerForm.$submitted || customerForm.cLastName.$dirty) &&
+                      customerForm.cLastName.$error.required">
+                Prezime je obavezno polje!
+            </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6"
+                 ng-class="{ 'has-error': (customerForm.$submitted || customerForm.cPhone.$dirty) &&
+                    customerForm.cPhone.$invalid }">
+                <label class="control-label">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                    Broj telefona
+                </label>
+                <div class="input-group">
+                    <input class="form-control" name="cPhone" placeholder="Broj telefona" required
+                           ng-model="ctrl.customer.phoneNumber">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-phone"></span></span>
+                </div>
+                <span class="help-block"
+                      ng-show="(customerForm.$submitted || customerForm.cPhone.$dirty) && customerForm.cPhone.$invalid">
+                Broj telefona je obavezno polje!
+            </span>
+            </div>
+            <div class="form-group col-md-6"
+                 ng-class="{ 'has-error': (customerForm.$submitted || customerForm.cPersNo.$dirty) &&
+                    customerForm.cPersNo.$invalid }">
+                <label class="control-label">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                    JMBG
+                </label>
+                <div class="input-group">
+                    <input class="form-control" name="cPersNo"
+                           placeholder="JMBG" maxlength="13" pattern="\d{13}" required
+                           ng-model="ctrl.customer.persNo">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-barcode"></span></span>
+                </div>
+                <span class="help-block"
+                      ng-show="(customerForm.$submitted || customerForm.cPersNo.$dirty) &&
+                        customerForm.cPersNo.$error.required">
+                    JMBG je obavezno polje!
+                </span>
+                <span class="help-block"
+                      ng-show="customerForm.cPersNo.$error.pattern">
+                    JMBG može sadržati samo brojeve i treba da bude dužine 13 karaktera!
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6" ng-class="{ 'has-error': customerForm.cEmail.$invalid}">
+                <label>E-mail</label>
+                <div class="input-group">
+                    <input class="form-control" type="email" name="cEmail" placeholder="E-mail"
+                           ng-model="ctrl.customer.email">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                </div>
+                <span class="help-block"
+                      ng-show="customerForm.cEmail.$error.email">Unesite validan e-mail.</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label>Adresa</label>
+                <div class="input-group">
+                    <input class="form-control" placeholder="Adresa"
+                           ng-model="ctrl.customer.address">
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-home"></span></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label>Pol</label>
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="gender" ng-model="ctrl.customer.gender" ng-value="'MALE'">
+                        Muški
+                    </label>
+                    <label>
+                        <input type="radio" name="gender" ng-model="ctrl.customer.gender" ng-value="'FEMALE'">
+                        Ženski
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button id="saveButton" class="btn btn-success">
+            <span class="glyphicon glyphicon-ok"></span>&nbsp;
+            Sačuvaj
+        </button>
+        <button type="button" class="btn btn-default"
+                ng-click="ctrl.cancel()">
+            Zatvori
+        </button>
+    </div>
+</form>

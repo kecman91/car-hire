@@ -1,0 +1,136 @@
+<!-- Navigation Bar -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="navbar-brand" href="">Vozila</span>
+        </div>
+        <ul class="nav navbar-nav">
+            <li>
+                <div class="navbar-form">
+                    <input type="text" ng-model="filterText" class="form-control" placeholder="Pretraga">
+                </div>
+            </li>
+            <li>
+                <a href="" ng-click="isFilterCollapsed = !isFilterCollapsed">
+                    Filter&nbsp;
+                    <span ng-class="{ 'glyphicon glyphicon-triangle-left': !isFilterCollapsed,
+                        'glyphicon glyphicon-triangle-bottom': isFilterCollapsed }"></span>
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right navbar-form">
+            <li>
+                <button type="button" class="btn btn-primary"
+                        ng-click="ctrl.showAddEditVehicleDialog(undefined)">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Dodaj vozilo
+                </button>
+            </li>
+        </ul>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<form name="filterForm" ng-submit="ctrl.filterVehicles()" uib-collapse="!isFilterCollapsed">
+    <div class="well">
+        <div class="row">
+            <div class="col-md-2">
+                <label>Proizvođač</label>
+                <div class="row" ng-repeat="m in ctrl.manufacturersFilter">
+                    <div class="col-md-1 checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="m.checked"> {{ m.name }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label class="text-center">Kategorija</label>
+                <div class="row" ng-repeat="c in ctrl.categoryFilter">
+                    <div class="col-md-1 checkbox">
+                        <label>
+                            <input type="checkbox" ng-model="c.checked"> {{ c.category }}
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="text-nowrap text-center">Cena viša od</label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" step="100" min="0" placeholder="Cena viša od"
+                               ng-model="ctrl.priceGreaterThan">
+                        <span class="input-group-addon">RSD</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label class="text-nowrap text-center">Cena manja od</label>
+                    <div class="input-group">
+                        <input class="form-control" type="number" step="100" min="{{ctrl.priceGreaterThan}}"
+                               placeholder="Cena manja od"
+                               ng-model="ctrl.priceLessThan">
+                        <span class="input-group-addon">RSD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-5">
+                <button class="btn btn-info">
+                    <span class="glyphicon glyphicon-search"></span>&nbsp;Traži</button>
+                <button type="button" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-remove"
+                        ng-click="ctrl.resetForm(filterForm)"></span>&nbsp;Obriši</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Table of vehicles -->
+<div class="well dynamic-content">
+    <table class="table table-striped table-hover clickable-table">
+        <thead>
+            <tr>
+                <th>Registarski broj</th>
+                <th>Proizvođač</th>
+                <th>Model</th>
+                <th>Kategorija</th>
+                <th>Gorivo</th>
+                <th>Cena/dan</th>
+                <th class="text-center">Brisanje vozila</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="v in ctrl.vehicles | filter : filterText"
+                ng-click="ctrl.showAddEditVehicleDialog(v)">
+                <td uib-tooltip="Ažurirajte vozilo" tooltip-placement="top"
+                    tooltip-class="carhire-tooltip" tooltip-append-to-body="true"
+                    ng-bind="v.regNumber"></td>
+                <td uib-tooltip="Ažurirajte vozilo" tooltip-placement="top"
+                    tooltip-class="carhire-tooltip" tooltip-append-to-body="true"
+                    ng-bind="v.model.manufacturer.name"></td>
+                <td uib-tooltip="Ažurirajte vozilo" tooltip-placement="top"
+                    tooltip-class="carhire-tooltip" tooltip-append-to-body="true"
+                    ng-bind="v.model.modelName"></td>
+                <td uib-tooltip="Ažurirajte vozilo" tooltip-placement="top"
+                    tooltip-class="carhire-tooltip" tooltip-append-to-body="true"
+                    ng-bind="v.category.category"></td>
+                <td uib-tooltip="Ažurirajte vozilo" tooltip-placement="top"
+                    tooltip-class="carhire-tooltip" tooltip-append-to-body="true"
+                    ng-bind="v.fuelType"></td>
+                <td uib-tooltip="Ažurirajte vozilo" tooltip-placement="top"
+                    tooltip-class="carhire-tooltip" tooltip-append-to-body="true">
+                    <span ng-bind="v.price"></span>&nbsp;<span>din</span></td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger"
+                            ng-click="ctrl.showDeleteDialog(v, $event)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

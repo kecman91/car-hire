@@ -1,0 +1,103 @@
+<!-- Navigation Bar -->
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <span class="navbar-brand" href="">Rezervacije</span>
+        </div>
+        <ul class="nav navbar-nav">
+            <li>
+                <div class="navbar-form">
+                    <input class="form-control" placeholder="Klijent"
+                           ng-model="ctrl.selectedCustomer"
+                           uib-typeahead="customer as customer.name + ' ' + customer.lastName
+                                    for customer in ctrl.searchCustomers($viewValue)"
+                           typeahead-loading="loadingCustomers"
+                           typeahead-no-results="noResults"
+                           typeahead-template-url="views/bookingManagement/customersTypeaheadTemplate.html"
+                           typeahead-on-select="ctrl.search(ctrl.selectedCustomer.id,
+                                selectedVehicle.regNumber, unpaidOnly)"
+                           typeahead-select-on-exact="true"
+                           typeahead-wait-ms="300">
+                    <i ng-show="loadingCustomers" class="glyphicon glyphicon-refresh"></i>
+                    <div ng-show="noResults">
+                        <i class="glyphicon glyphicon-remove"></i>&nbsp;Nije pronađen nijedan klijent
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="navbar-form">
+                    <input class="form-control" placeholder="Vozilo"
+                           ng-model="selectedVehicle"
+                           uib-typeahead="vehicle as vehicle.model.manufacturer.name + ' ' + vehicle.model.modelName
+                                    for vehicle in ctrl.searchVehicles($viewValue)"
+                           typeahead-loading="loadingVehicles"
+                           typeahead-no-results="noVehicles"
+                           typeahead-template-url="views/bookingManagement/vehiclesTypeaheadTemplate.html"
+                           typeahead-on-select="ctrl.search(ctrl.selectedCustomer.id,
+                                selectedVehicle.regNumber, unpaidOnly)"
+                           typeahead-select-on-exact="true"
+                           typeahead-wait-ms="300">
+                    <i ng-show="loadingVehicles" class="glyphicon glyphicon-refresh"></i>
+                    <div ng-show="noVehicles">
+                        <i class="glyphicon glyphicon-remove"></i>&nbsp;Nije pronađeno nijedno vozilo
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="checkbox">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="unpaidOnly"
+                               ng-change="ctrl.search(ctrl.selectedCustomer.id, selectedVehicle.regNumber, unpaidOnly)">
+                        Prikaži samo neplaćene rezervacije
+                    </label>
+                </div>
+            </li>
+        </ul>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container-fluid -->
+</nav>
+
+<!-- Table of reservations -->
+<div class="well dynamic-content">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Klijent</th>
+                <th>Vozilo</th>
+                <th>Od</th>
+                <th>Do</th>
+                <th>Za naplatu</th>
+                <th>Plaćeno</th>
+                <th>Rezervisano dana</th>
+                <th class="text-center">Označiti kao plaćeno</th>
+                <th class="text-center">Brisanje rezervacije</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-class="{ 'danger': !booking.paymentReceived }"
+                ng-repeat="booking in ctrl.bookings | filter : filterText">
+                <td ng-bind="booking.customer.name + ' ' + booking.customer.lastName"></td>
+                <td ng-bind="booking.vehicle.regNumber"></td>
+                <td ng-bind="booking.dateFrom | date : 'dd-MM-yyyy'"></td>
+                <td ng-bind="booking.dateTo | date : 'dd-MM-yyyy'"></td>
+                <td><span ng-bind="booking.totalPrice"></span>&nbsp;<span>din</span></td>
+                <td ng-bind="booking.paymentReceived ? 'Da' : 'Ne'"></td>
+                <td ng-bind="booking.bookedOn | date : 'dd-MM-yyyy'"></td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-info"
+                            ng-if="!booking.paymentReceived"
+                            ng-click="ctrl.showSetPaidDialog(booking)">
+                        <span class="glyphicon glyphicon-check"></span>
+                    </button>
+                </td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-danger"
+                            ng-click="ctrl.showDeleteDialog(booking)">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
