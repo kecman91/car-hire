@@ -1,187 +1,234 @@
 <div>
-    <div class="row">
-        <div class="form-group btn-group col-sm-12">
-            <label class="btn btn-info"
-                   ng-model="ctrl.newClient" ng-disabled="ctrl.formDisabled" uib-btn-radio="true">Novi klijent</label>
-            <label class="btn btn-info"
-                   ng-model="ctrl.newClient" ng-disabled="ctrl.formDisabled" uib-btn-radio="false">Postojeći klijent</label>
-        </div>
+    <div class="form-group btn-group col-sm-12">
+        <label class="btn btn-info"
+               ng-model="ctrl.newClient" ng-disabled="ctrl.formDisabled" uib-btn-radio="true">Novi klijent</label>
+        <label class="btn btn-info"
+               ng-model="ctrl.newClient" ng-disabled="ctrl.formDisabled" uib-btn-radio="false">Postojeći klijent</label>
     </div>
-    <form class="well col-md-5" name="reservationForm" novalidate autocomplete="off"
-          ng-submit="ctrl.reservation(ctrl.customer, ctrl.vehicle, ctrl.booking)">
-        <div ng-if="ctrl.newClient">
-            <div class="form-group"
-                 ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.custName.$dirty) &&
-                  reservationForm.custName.$invalid }">
-                <label class="control-label">
-                    <span class="glyphicon glyphicon-asterisk"></span>
-                    Ime klijenta:
+    <div class="col-md-5">
+        <form class="well" name="reservationForm" novalidate autocomplete="off"
+              ng-submit="ctrl.reservation(ctrl.customer, ctrl.vehicle, ctrl.booking)">
+            <div ng-if="ctrl.newClient">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.custName.$dirty) &&
+                      reservationForm.custName.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Ime klijenta:
+                    </label>
+                    <input class="form-control" name="custName" placeholder="Ime" required
+                           ng-model="ctrl.customer.name" ng-disabled="ctrl.formDisabled">
+                    <span class="help-block"
+                          ng-show="(reservationForm.$submitted || reservationForm.custName.$dirty) &&
+                          reservationForm.custName.$error.required">Ime je obavezno polje!</span>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.custLastName.$dirty) &&
+                      reservationForm.custLastName.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Prezime klijenta:
+                    </label>
+                    <input class="form-control" name="custLastName" placeholder="Prezime" required
+                           ng-model="ctrl.customer.lastName" ng-disabled="ctrl.formDisabled">
+                    <span class="help-block"
+                          ng-show="(reservationForm.$submitted || reservationForm.custLastName.$dirty) &&
+                          reservationForm.custLastName.$error.required">Prezime je obavezno polje!</span>
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.custPersNo.$dirty) &&
+                      reservationForm.custPersNo.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        JMBG klijenta:
+                    </label>
+                    <input class="form-control" name="custPersNo" placeholder="JMBG" maxlength="13" required
+                           ng-model="ctrl.customer.persNo" ng-disabled="ctrl.formDisabled">
+                    <span class="help-block"
+                          ng-show="(reservationForm.$submitted || reservationForm.custPersNo.$dirty) &&
+                          reservationForm.custPersNo.$error.required">JMBG je obavezno polje!</span>
+                </div>
+                <label>Pol:</label>
+                <label class="radio-inline">
+                    <input type="radio" name="gender" ng-model="ctrl.customer.gender"
+                           ng-value="0" ng-disabled="ctrl.formDisabled">
+                    Muški
                 </label>
-                <input class="form-control" name="custName" placeholder="Ime" required
-                       ng-model="ctrl.customer.name" ng-disabled="ctrl.formDisabled">
-                <span class="help-block"
-                      ng-show="(reservationForm.$submitted || reservationForm.custName.$dirty) &&
-                      reservationForm.custName.$error.required">Ime je obavezno polje!</span>
-            </div>
-            <div class="form-group"
-                 ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.custLastName.$dirty) &&
-                  reservationForm.custLastName.$invalid }">
-                <label class="control-label">
-                    <span class="glyphicon glyphicon-asterisk"></span>
-                    Prezime klijenta:
+                <label class="radio-inline">
+                    <input type="radio" name="gender" ng-model="ctrl.customer.gender"
+                           ng-value="1" ng-disabled="ctrl.formDisabled">
+                    Ženski
                 </label>
-                <input class="form-control" name="custLastName" placeholder="Prezime" required
-                       ng-model="ctrl.customer.lastName" ng-disabled="ctrl.formDisabled">
-                <span class="help-block"
-                      ng-show="(reservationForm.$submitted || reservationForm.custLastName.$dirty) &&
-                      reservationForm.custLastName.$error.required">Prezime je obavezno polje!</span>
+                <div class="form-group">
+                    <label>Email klijenta:</label>
+                    <input class="form-control" type="email" placeholder="E-mail"
+                           ng-model="ctrl.customer.email" ng-disabled="ctrl.formDisabled">
+                </div>
+                <div class="form-group"
+                     ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.custPhone.$dirty) &&
+                      reservationForm.custPhone.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Kontakt telefon klijenta:
+                    </label>
+                    <input class="form-control" placeholder="Tel" name="custPhone" required
+                           ng-model="ctrl.customer.phoneNumber" ng-disabled="ctrl.formDisabled">
+                    <span class="help-block"
+                          ng-show="(reservationForm.$submitted || reservationForm.custPhone.$dirty) &&
+                          reservationForm.custPhone.$error.required">Telefon je obavezno polje!</span>
+                </div>
+                <div class="form-group">
+                    <label>Adresa klijenta:</label>
+                    <input class="form-control" placeholder="Adresa"
+                           ng-model="ctrl.customer.address" ng-disabled="ctrl.formDisabled">
+                </div>
+            </div>
+            <div ng-if="!ctrl.newClient">
+                <div class="form-group"
+                     ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.customer.$dirty) &&
+                      reservationForm.customer.$invalid }">
+                    <label class="control-label">
+                        <span class="glyphicon glyphicon-asterisk"></span>
+                        Klijent:</label>
+                    <select class="form-control" name="customer" required
+                            ng-model="ctrl.customer"
+                            ng-options="c as c.name + ' ' + c.lastName for c in ctrl.customers"
+                            ng-disabled="ctrl.formDisabled">
+                        <option selected value="">Klijenti</option>
+                    </select>
+                    <span class="help-block"
+                          ng-show="(reservationForm.$submitted || reservationForm.customer.$dirty) &&
+                          reservationForm.customer.$error.required">Morate izabrati jednog klijenta!</span>
+                </div>
             </div>
             <div class="form-group"
-                 ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.custPersNo.$dirty) &&
-                  reservationForm.custPersNo.$invalid }">
+                 ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.dateFrom.$dirty) &&
+                      reservationForm.dateFrom.$invalid }">
                 <label class="control-label">
                     <span class="glyphicon glyphicon-asterisk"></span>
-                    JMBG klijenta:
+                    Datum:
                 </label>
-                <input class="form-control" name="custPersNo" placeholder="JMBG" maxlength="13" required
-                       ng-model="ctrl.customer.persNo" ng-disabled="ctrl.formDisabled">
+                <div class="input-group">
+                    <input class="form-control" name="dateFrom" placeholder="Datum" required
+                           ng-model="ctrl.booking.dateFrom"
+                           uib-datepicker-popup="dd-MM-yyyy" is-open="dateFromOpened"
+                           show-button-bar="false"
+                           ng-change="ctrl.getFreeVehicles(ctrl.booking.dateFrom, ctrl.booking.numDays)"
+                           ng-disabled="ctrl.formDisabled"/>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" ng-click="dateFromOpened = !dateFromOpened"
+                                ng-disabled="ctrl.formDisabled">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </button>
+                    </span>
+                </div>
                 <span class="help-block"
-                      ng-show="(reservationForm.$submitted || reservationForm.custPersNo.$dirty) &&
-                      reservationForm.custPersNo.$error.required">JMBG je obavezno polje!</span>
-            </div>
-            <label>Pol:</label>
-            <label class="radio-inline">
-                <input type="radio" name="gender" ng-model="ctrl.customer.gender"
-                       ng-value="0" ng-disabled="ctrl.formDisabled">
-                Muški
-            </label>
-            <label class="radio-inline">
-                <input type="radio" name="gender" ng-model="ctrl.customer.gender"
-                       ng-value="1" ng-disabled="ctrl.formDisabled">
-                Ženski
-            </label>
-            <div class="form-group">
-                <label>Email klijenta:</label>
-                <input class="form-control" type="email" placeholder="E-mail"
-                       ng-model="ctrl.customer.email" ng-disabled="ctrl.formDisabled">
+                      ng-show="(reservationForm.$submitted || reservationForm.dateFrom.$dirty) &&
+                      reservationForm.dateFrom.$error.required">Morate uneti datum početka iznajmljivanja!</span>
+                <span class="help-block"
+                      ng-show="reservationForm.dateFrom.$error.date">Pogrešan format datuma! (dd-MM-yyyy)</span>
             </div>
             <div class="form-group"
-                 ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.custPhone.$dirty) &&
-                  reservationForm.custPhone.$invalid }">
+                 ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.numberOfDays.$dirty) &&
+                      reservationForm.numberOfDays.$invalid }">
                 <label class="control-label">
                     <span class="glyphicon glyphicon-asterisk"></span>
-                    Kontakt telefon klijenta:
+                    Broj dana:
                 </label>
-                <input class="form-control" placeholder="Tel" name="custPhone" required
-                       ng-model="ctrl.customer.phoneNumber" ng-disabled="ctrl.formDisabled">
-                <span class="help-block"
-                      ng-show="(reservationForm.$submitted || reservationForm.custPhone.$dirty) &&
-                      reservationForm.custPhone.$error.required">Telefon je obavezno polje!</span>
-            </div>
-            <div class="form-group">
-                <label>Adresa klijenta:</label>
-                <input class="form-control" placeholder="Adresa"
-                       ng-model="ctrl.customer.address" ng-disabled="ctrl.formDisabled">
-            </div>
-        </div>
-        <div ng-if="!ctrl.newClient">
-            <div class="form-group"
-                 ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.customer.$dirty) &&
-                  reservationForm.customer.$invalid }">
-                <label class="control-label">
-                    <span class="glyphicon glyphicon-asterisk"></span>
-                    Klijent:</label>
-                <select class="form-control" name="customer" required
-                        ng-model="ctrl.customer"
-                        ng-options="c as c.name + ' ' + c.lastName for c in ctrl.customers"
+                <select class="form-control" name="numberOfDays" required
+                        ng-model="ctrl.booking.numDays"
+                        ng-options="numDays for numDays in [ 1, 2, 3, 4, 5, 6, 7 ]"
+                        ng-change="ctrl.getFreeVehicles(dateFrom, ctrl.booking.numDays)"
                         ng-disabled="ctrl.formDisabled">
-                    <option selected value="">Klijenti</option>
+                    <option selected value="">Broj dana</option>
                 </select>
                 <span class="help-block"
-                      ng-show="(reservationForm.$submitted || reservationForm.customer.$dirty) &&
-                      reservationForm.customer.$error.required">Morate izabrati jednog klijenta!</span>
+                      ng-show="(reservationForm.$submitted || reservationForm.numberOfDays.$dirty) &&
+                      reservationForm.numberOfDays.$error.required">Morate uneti koliko dana traje iznajmljivanje!</span>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input name="paymentReceived" type="checkbox"
+                           ng-model="ctrl.booking.payed" ng-disabled="ctrl.formDisabled">
+                    Plaćeno
+                </label>
+            </div>
+            <div class="form-group"
+                 ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.vehicle.$dirty) &&
+                      reservationForm.vehicle.$invalid }">
+                <label class="control-label">
+                    <span class="glyphicon glyphicon-asterisk"></span>
+                    Lista vozila:
+                </label>
+                <select class="form-control" name="vehicle" required
+                        ng-model="ctrl.vehicle"
+                        ng-options="v as v.regNumber + ' ' + v.model.manufacturer.name + ' ' + v.model.modelName
+                            for v in ctrl.vehicles"
+                        ng-disabled="ctrl.formDisabled">
+                    <option selected value="">Vozila</option>
+                </select>
+                <span class="help-block"
+                      ng-show="(reservationForm.$submitted || reservationForm.vehicle.$dirty) &&
+                      reservationForm.vehicle.$error.required">Morate izabrati neko vozilo!</span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Za plaćanje:</label>
+                <div class="input-group">
+                    <input class="form-control" disabled
+                           ng-value="ctrl.vehicle && ctrl.booking.numDays ?
+                                ctrl.vehicle.price * ctrl.booking.numDays : ''" />
+                    <span class="input-group-addon">din</span>
+                </div>
+            </div>
+            <button class="btn btn-primary" ng-disabled="ctrl.formDisabled">Rezerviši</button>
+            <button class="btn btn-info" type="button" ng-click="ctrl.resetForm(reservationForm)">Nova rezervacija</button>
+        </form>
+    </div>
+
+    <!-- Most popular vehicle -->
+    <div class="col-md-5">
+        <div class="well">
+            <h3>Najpopularnije vozilo prošlog meseca</h3>
+            <div class="form-group">
+                <label class="control-label">
+                    Registarski broj
+                </label>
+                <p ng-bind="ctrl.vehicleOfTheMonth.regNumber"></p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    Proizvođač
+                </label>
+                <p ng-bind="ctrl.vehicleOfTheMonth.model.manufacturer.name"></p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    Model
+                </label>
+                <p ng-bind="ctrl.vehicleOfTheMonth.model.modelName"></p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Kategorija vozila</label>
+                <p ng-bind="ctrl.vehicleOfTheMonth.category.category"></p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    Kilometraža
+                </label>
+                <p ng-bind="ctrl.vehicleOfTheMonth.currentMileage"></p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    Cena po danu
+                </label>
+                <p ng-bind="ctrl.vehicleOfTheMonth.price"></p>
+            </div>
+            <div class="form-group">
+                <label class="control-label">
+                    Godina proizvodnje
+                </label>
+                <p ng-bind="ctrl.vehicleOfTheMonth.manufacturingYear"></p>
             </div>
         </div>
-        <div class="form-group"
-             ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.dateFrom.$dirty) &&
-                  reservationForm.dateFrom.$invalid }">
-            <label class="control-label">
-                <span class="glyphicon glyphicon-asterisk"></span>
-                Datum:
-            </label>
-            <div class="input-group">
-                <input class="form-control" name="dateFrom" placeholder="Datum" required
-                       ng-model="ctrl.booking.dateFrom"
-                       uib-datepicker-popup="dd-MM-yyyy" is-open="dateFromOpened"
-                       show-button-bar="false"
-                       ng-change="ctrl.getFreeVehicles(ctrl.booking.dateFrom, ctrl.booking.numDays)"
-                       ng-disabled="ctrl.formDisabled"/>
-                <span class="input-group-btn">
-	            	<button type="button" class="btn btn-primary" ng-click="dateFromOpened = !dateFromOpened"
-                            ng-disabled="ctrl.formDisabled">
-                        <span class="glyphicon glyphicon-calendar"></span>
-                    </button>
-	          	</span>
-            </div>
-            <span class="help-block"
-                  ng-show="(reservationForm.$submitted || reservationForm.dateFrom.$dirty) &&
-                  reservationForm.dateFrom.$error.required">Morate uneti datum početka iznajmljivanja!</span>
-            <span class="help-block"
-                  ng-show="reservationForm.dateFrom.$error.date">Pogrešan format datuma! (dd-MM-yyyy)</span>
-        </div>
-        <div class="form-group"
-             ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.numberOfDays.$dirty) &&
-                  reservationForm.numberOfDays.$invalid }">
-            <label class="control-label">
-                <span class="glyphicon glyphicon-asterisk"></span>
-                Broj dana:
-            </label>
-            <select class="form-control" name="numberOfDays" required
-                    ng-model="ctrl.booking.numDays"
-                    ng-options="numDays for numDays in [ 1, 2, 3, 4, 5, 6, 7 ]"
-                    ng-change="ctrl.getFreeVehicles(dateFrom, ctrl.booking.numDays)"
-                    ng-disabled="ctrl.formDisabled">
-                <option selected value="">Broj dana</option>
-            </select>
-            <span class="help-block"
-                  ng-show="(reservationForm.$submitted || reservationForm.numberOfDays.$dirty) &&
-                  reservationForm.numberOfDays.$error.required">Morate uneti koliko dana traje iznajmljivanje!</span>
-        </div>
-        <div class="checkbox">
-            <label>
-                <input name="paymentReceived" type="checkbox"
-                       ng-model="ctrl.booking.payed" ng-disabled="ctrl.formDisabled">
-                Plaćeno
-            </label>
-        </div>
-        <div class="form-group"
-             ng-class="{ 'has-error': (reservationForm.$submitted || reservationForm.vehicle.$dirty) &&
-                  reservationForm.vehicle.$invalid }">
-            <label class="control-label">
-                <span class="glyphicon glyphicon-asterisk"></span>
-                Lista vozila:
-            </label>
-            <select class="form-control" name="vehicle" required
-                    ng-model="ctrl.vehicle"
-                    ng-options="v as v.regNumber + ' ' + v.model.manufacturer.name + ' ' + v.model.modelName
-                        for v in ctrl.vehicles"
-                    ng-disabled="ctrl.formDisabled">
-                <option selected value="">Vozila</option>
-            </select>
-            <span class="help-block"
-                  ng-show="(reservationForm.$submitted || reservationForm.vehicle.$dirty) &&
-                  reservationForm.vehicle.$error.required">Morate izabrati neko vozilo!</span>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Za plaćanje:</label>
-            <div class="input-group">
-                <input class="form-control" disabled
-                       ng-value="ctrl.vehicle && ctrl.booking.numDays ?
-                            ctrl.vehicle.price * ctrl.booking.numDays : ''" />
-                <span class="input-group-addon">din</span>
-            </div>
-        </div>
-        <button class="btn btn-primary" ng-disabled="ctrl.formDisabled">Rezerviši</button>
-        <button class="btn btn-info" type="button" ng-click="ctrl.resetForm(reservationForm)">Nova rezervacija</button>
-    </form>
+    </div>
 </div>

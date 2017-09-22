@@ -27,6 +27,12 @@ app.controller('ReservationController', ['$scope', 'CustomerService', 'VehicleSe
         ToasterService.showError('Greška tokom dobavljanja liste klijenata.');
     });
 
+    VehicleService.getLastMonthsMostPopular().then(function(response) {
+        ctrl.vehicleOfTheMonth = response;
+    }, function() {
+        ToasterService.showError('Greška tokom dobavljanja najpopularnijeg vozila.');
+    });
+
     ctrl.resetForm = function(form) {
         Util.setToPristine(form);
         ctrl.formDisabled = false;

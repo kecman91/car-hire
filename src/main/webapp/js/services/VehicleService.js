@@ -84,6 +84,16 @@ app.service('VehicleService', ['$http', '$q', function($http, $q) {
             deferred.reject(error);
         });
         return deferred.promise;
+    };
+
+    VehicleService.getLastMonthsMostPopular = function() {
+        var deferred = $q.defer();
+        $http.get(VehicleService.baseUrl + '/lastMonthsMostPopular').then(function(response) {
+            deferred.resolve(response.data);
+        }, function(error) {
+            deferred.reject(error);
+        });
+        return deferred.promise;
     }
 
 }]);
