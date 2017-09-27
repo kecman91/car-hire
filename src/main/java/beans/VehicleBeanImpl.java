@@ -75,14 +75,21 @@ public class VehicleBeanImpl implements VehicleBean {
         cq.select(vehicleRoot);
         List<Predicate> predicateList = new ArrayList<>();
         if (filter.getManufacturers() != null && filter.getManufacturers().length > 0) {
-            for (String mid : filter.getManufacturers()) {
-                predicateList.add(cb.equal(vehicleRoot.get("model").get("manufacturer").get("manufacturerCode"), mid));
+            Predicate manufacturerCondition = cb.equal(vehicleRoot.get("model").get("manufacturer")
+                    .get("manufacturerCode"), filter.getManufacturers()[0]);
+            for (int i = 0; i < filter.getManufacturers().length; i++) {
+                manufacturerCondition = cb.or(cb.equal(vehicleRoot.get("model").get("manufacturer")
+                        .get("manufacturerCode"), filter.getManufacturers()[i]), manufacturerCondition);
             }
+            predicateList.add(manufacturerCondition);
         }
         if (filter.getCategories() != null && filter.getCategories().length > 0) {
-            for (String cat : filter.getCategories()) {
-                predicateList.add(cb.equal(vehicleRoot.get("category").get("id"), cat));
+            Predicate categoryCondition = cb.equal(vehicleRoot.get("category").get("id"), filter.getCategories()[0]);
+            for (int i = 0; i < filter.getCategories().length; i++) {
+                categoryCondition = cb.or(cb.equal(vehicleRoot.get("category").get("id"), filter.getCategories()[i]),
+                        categoryCondition);
             }
+            predicateList.add(categoryCondition);
         }
         if (filter.getPriceGT() > 0) {
             predicateList.add(cb.greaterThanOrEqualTo(vehicleRoot.get("price"), filter.getPriceGT()));
