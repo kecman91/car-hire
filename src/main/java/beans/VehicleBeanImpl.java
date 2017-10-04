@@ -54,8 +54,8 @@ public class VehicleBeanImpl implements VehicleBean {
     public List<Vehicle> loadFreeVehicles(Date from, Date to) {
         TypedQuery<Vehicle> q = em.createQuery("select v from Vehicle v where " +
                 "(select count(b1.id) from Booking b1 where b1.vehicle.regNumber = v.regNumber and " +
-                "(:dateFrom not between b1.dateFrom and b1.dateTo) and " +
-                "(:dateTo not between b1.dateFrom and b1.dateTo)) = 0", Vehicle.class);
+                "(:dateFrom between b1.dateFrom and b1.dateTo) and " +
+                "(:dateTo between b1.dateFrom and b1.dateTo)) = 0", Vehicle.class);
         q.setParameter("dateFrom", from);
         q.setParameter("dateTo", to);
         return q.getResultList();
