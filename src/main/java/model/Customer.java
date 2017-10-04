@@ -3,13 +3,7 @@ package model;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
@@ -26,13 +20,22 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
+
+	@Column(nullable = false)
 	private String persNo;
+
+	@Column(nullable = false)
 	private String name;
+
+	@Column(nullable = false)
 	private String lastName;
+
+	@Column(nullable = false)
+	private String phoneNumber;
+
+	private String address;
 	private Gender gender;
 	private String email;
-	private String phoneNumber;
-	private String address;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="customer", fetch=FetchType.EAGER)

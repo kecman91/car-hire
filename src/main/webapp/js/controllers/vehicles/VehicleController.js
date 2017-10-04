@@ -1,35 +1,13 @@
 app.controller('VehicleController',
-    ['$scope', '$filter', 'VehicleService', 'ManufacturerService', 'VehicleCategoryService', 'ModelService',
+    ['$filter', 'VehicleService', 'ManufacturerService', 'VehicleCategoryService', 'ModelService',
         'ToasterService', '$uibModal', 'DialogService', 'Util',
-        function($scope, $filter, VehicleService, ManufacturerService, VehicleCategoryService, ModelService,
+        function($filter, VehicleService, ManufacturerService, VehicleCategoryService, ModelService,
                  ToasterService, $uibModal, DialogService, Util) {
     var ctrl = this;
-	
-	$scope.$parent.location = {
-		reservation: false,
-		vehicles: true,
-		customers: false,
-		bookings: false
-	};
 
 	ctrl.vehicles = [];
 	ctrl.categoryFilter = [];
 	ctrl.manufacturersFilter = [];
-
-    /**
-     * Finds the vehicle by the specified id in the vehicles array on the Vehicles page.
-     *
-     * @param vehicleRegNumber The vehicle's registration number
-     * @return {number} The index of the vehicle if it is found or -1 otherwise.
-     */
-    var findVehicleById = function(vehicleRegNumber) {
-        for (var i = 0; i < ctrl.vehicles.length; i++) {
-            if (angular.equals(ctrl.vehicles[i].regNumber, vehicleRegNumber)) {
-                return i;
-            }
-        }
-        return -1;
-    };
 
 	ManufacturerService.list().then(function(response) {
 		ctrl.manufacturersFilter = response;
@@ -54,13 +32,13 @@ app.controller('VehicleController',
 		criteria.manufacturers = [];
 		criteria.categories = [];
 		for (var i = 0; i < ctrl.manufacturersFilter.length; i++) {
-			if (ctrl.manufacturersFilter[i].checked == true) {
+			if (ctrl.manufacturersFilter[i].checked) {
 				criteria.manufacturers.push(ctrl.manufacturersFilter[i].manufacturerCode);
 			}
 		}
-		for (var i = 0; i < ctrl.categoryFilter.length; i++) {
-			if (ctrl.categoryFilter[i].checked == true) {
-				criteria.categories.push(ctrl.categoryFilter[i].id);
+		for (var j = 0; j < ctrl.categoryFilter.length; j++) {
+			if (ctrl.categoryFilter[j].checked) {
+				criteria.categories.push(ctrl.categoryFilter[j].id);
 			}
 		}
 		if (ctrl.priceGreaterThan > 0) {

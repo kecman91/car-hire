@@ -1,13 +1,6 @@
-app.controller('CustomerController', ['$scope', '$location', 'CustomerService', '$uibModal', 'ToasterService', 'DialogService',
-        function($scope, $location, CustomerService, $uibModal, ToasterService, DialogService) {
+app.controller('CustomerController', ['$location', 'CustomerService', '$uibModal', 'ToasterService', 'DialogService',
+        function($location, CustomerService, $uibModal, ToasterService, DialogService) {
     var ctrl = this;
-	
-	$scope.$parent.location = {
-		reservation: false,
-		vehicles: false,
-		customers: true,
-		bookings: false
-	};
 
     ctrl.pages = [];
     ctrl.customers = [];

@@ -42,11 +42,16 @@
                         <span class="glyphicon glyphicon-asterisk"></span>
                         JMBG klijenta:
                     </label>
-                    <input class="form-control" name="custPersNo" placeholder="JMBG" maxlength="13" required
+                    <input class="form-control" name="custPersNo" placeholder="JMBG"
+                           maxlength="13" pattern="\d{13}" required
                            ng-model="ctrl.customer.persNo" ng-disabled="ctrl.formDisabled">
                     <span class="help-block"
                           ng-show="(reservationForm.$submitted || reservationForm.custPersNo.$dirty) &&
                           reservationForm.custPersNo.$error.required">JMBG je obavezno polje!</span>
+                    <span class="help-block"
+                          ng-show="reservationForm.custPersNo.$error.pattern">
+                    JMBG može sadržati samo brojeve i treba da bude dužine 13 karaktera!
+                </span>
                 </div>
                 <label>Pol:</label>
                 <label class="radio-inline">

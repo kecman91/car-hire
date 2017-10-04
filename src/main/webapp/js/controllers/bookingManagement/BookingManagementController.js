@@ -1,14 +1,7 @@
-app.controller('BookingManagementController', ['$scope', '$location', 'BookingService', 'CustomerService',
+app.controller('BookingManagementController', ['$location', 'BookingService', 'CustomerService',
     'VehicleService', 'DialogService', 'ToasterService',
-    function($scope, $location, BookingService, CustomerService, VehicleService, DialogService, ToasterService) {
+    function($location, BookingService, CustomerService, VehicleService, DialogService, ToasterService) {
     var ctrl = this;
-
-    $scope.$parent.location = {
-        reservation: false,
-        vehicles: false,
-        customers: false,
-        bookings: true
-    };
 
     ctrl.bookings = [];
     ctrl.selectedCustomer = undefined;
@@ -58,7 +51,7 @@ app.controller('BookingManagementController', ['$scope', '$location', 'BookingSe
 
     var searchParams = $location.search();
     if (angular.isDefined(searchParams.customerId) && angular.isDefined(searchParams.customerName)) {
-        ctrl.selectedCustomer = searchParams.customerName
+        ctrl.selectedCustomer = searchParams.customerName;
         ctrl.search(searchParams.customerId, undefined, true);
     }
 }]);

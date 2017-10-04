@@ -1,15 +1,8 @@
-app.controller('ReservationController', ['$scope', 'CustomerService', 'VehicleService', 'BookingService', '$timeout',
+app.controller('ReservationController', ['CustomerService', 'VehicleService', 'BookingService', '$timeout',
                                          'ToasterService', 'Util',
-                                         function($scope, CustomerService, VehicleService, BookingService, $timeout,
+                                         function(CustomerService, VehicleService, BookingService, $timeout,
                                                   ToasterService, Util){
 	var ctrl = this;
-	
-	$scope.$parent.location = {
-		reservation: true,
-		vehicles: false,
-		customers: false,
-		bookings: false
-	};
 
 	ctrl.customers;
 	ctrl.vehicles;

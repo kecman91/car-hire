@@ -13,7 +13,7 @@
 		<toaster-container toaster-options="{ 'time-out': { 'toast-success': 5000, 'toast-warning': 5000 } }">
 		</toaster-container>
 
-		<nav class="navbar navbar-inverse navbar-fixed-top">
+		<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavbarController as ctrl">
 			<div class="container-fluid">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle collapsed"
@@ -28,17 +28,25 @@
 				</div>
 				<div class="collapse navbar-collapse" id="carhire-navbar">
 					<ul class="nav navbar-nav">
-						<li ng-class="{active: location.reservation}">
-							<a href="#!/reservation">Rezervacija</a>
+						<li ng-class="{active: (ctrl.location == 'reservation')}">
+							<a href="#!/reservation" ng-click="ctrl.location = 'reservation'">
+								Rezervacija
+							</a>
 						</li>
-						<li ng-class="{active: location.vehicles}">
-							<a href="#!/vehicles">Vozila</a>
+						<li ng-class="{active: ctrl.location == 'vehicles'}">
+							<a href="#!/vehicles" ng-click="ctrl.location = 'vehicles'">
+								Vozila
+							</a>
 						</li>
-						<li ng-class="{active: location.customers}">
-							<a href="#!/customers">Klijenti</a>
+						<li ng-class="{active: (ctrl.location == 'customers')}">
+							<a href="#!/customers" ng-click="ctrl.location = 'customers'">
+								Klijenti
+							</a>
 						</li>
-						<li ng-class="{active: location.bookings}">
-							<a href="#!/bookingMngmnt">Upravljanje rezervacijama</a>
+						<li ng-class="{active: ctrl.location == 'bookings'}">
+							<a href="#!/bookingMngmnt" ng-click="ctrl.location = 'bookings'">
+								Upravljanje rezervacijama
+							</a>
 						</li>
 					</ul>
 				</div>
@@ -65,6 +73,7 @@
 		<script src="js/app.js"></script>
 		
 		<!-- Controllers -->
+		<script src="js/controllers/NavbarController.js"></script>
 		<script src="js/controllers/reservation/ReservationController.js"></script>
 		<script src="js/controllers/vehicles/VehicleController.js"></script>
 		<script src="js/controllers/vehicles/AddEditVehicleModalController.js"></script>
